@@ -6,8 +6,8 @@ const defaultState = {
     firstName: "",
     lastName: "",
     phone: "",
-    gender: "M",
-    age: ""
+    gender: "-",
+    age: null
   }
 };
 

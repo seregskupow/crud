@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import SS from './components/ss'
+import SS from "./components/ss";
 
 import Form from "./components/Form";
 import Table from "./components/Table";
@@ -11,22 +11,18 @@ import { getFromLS } from "./store/action/getFromLS";
 class App extends Component {
   constructor(props) {
     super(props);
-    // this.saveToLocalStorage = this.saveToLocalStorage.bind(this);
     this.getFromLocalStorage = this.getFromLocalStorage.bind(this);
-    
   }
-  
+
   getFromLocalStorage() {}
   componentDidMount() {
     if (localStorage.getItem("data")) {
       this.props.getFromLS(JSON.parse(localStorage.getItem("data")));
-      
     }
-    
   }
   componentWillReceiveProps(nextProps) {
     this.setState(nextProps);
-}
+  }
 
   render() {
     console.log(this.props.data);
@@ -41,11 +37,9 @@ class App extends Component {
               data={this.props.data}
               saveToLocalStorage={this.saveToLocalStorage}
             />
-            
           </div>
           <div className="col-8">
             <Table data={this.props.data} />
-            
           </div>
         </div>
       </div>
