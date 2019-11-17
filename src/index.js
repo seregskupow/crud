@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { createStore } from "redux";
 import { connect, Provider } from "react-redux";
 import mainReducer from "./store/reducers/combineReducers";
+import './scss/main.scss'
 
 const store = createStore(mainReducer);
 

@@ -1,29 +1,20 @@
 import React from "react";
+import _ from "lodash";
 
-export default function Table({data}) {
-  console.log(data);
+export default function Table(props) {
+  const { data } = props;
+
   return (
-    <table class="table">
-      <thead>
-        <tr>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Phone</th>
-          <th>Gender</th>
-          <th>Age</th>
+    <tbody>
+      {data.map(item => (
+        <tr key={Math.random() * 1000 + 1}>
+          <td>{item.firstName}</td>
+          <td>{item.lastName}</td>
+          <td>{item.phone}</td>
+          <td>{item.gender}</td>
+          <td>{item.age}</td>
         </tr>
-      </thead>
-      <tbody>
-        {data.map(item => (
-          <tr key={item.age}>
-            <th>{item.firstName}</th>
-            <td>{item.lastName}</td>
-            <td>{item.phone}</td>
-            <td>{item.gender}</td>
-            <td>{item.age}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+      ))}
+    </tbody>
   );
 }

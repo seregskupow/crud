@@ -1,0 +1,24 @@
+.data-col{
+    position: relative;
+    min-height:555px;
+    & .pagination{
+        cursor: pointer;
+        position: absolute;
+        bottom: -60px;
+        text-align: center;
+    }
+}
+.col{
+    background: rgba(235, 234, 234, 0.726);
+    border-radius: 5px;
+    padding: 15px 10px 0px 10px;
+    
+}
+th {
+    cursor: pointer;
+    transition: all .2s ease;
+    &:hover{
+        background:#0069d9;
+        color: #fff;
+    }
+}

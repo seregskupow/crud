@@ -1,5 +1,6 @@
 import { SET_PERSON_PARAMETER } from "../action/actions";
 import { SAVE_TO_STORAGE } from "../action/saveToStorage";
+import {CLEAR_STORE} from '../action/clearStore'
 
 const defaultState = {
   params: {
@@ -7,7 +8,7 @@ const defaultState = {
     lastName: "",
     phone: "",
     gender: "-",
-    age: null
+    age: ""
   }
 };
 
@@ -22,6 +23,11 @@ export const addPersonReducer = (state = defaultState, action) => {
           [action.parameter]: action.value
         }
       };
+      case CLEAR_STORE:
+        return{
+          ...state,
+          params:defaultState.params
+        }
       default:return state
     }
   

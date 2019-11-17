@@ -87,11 +87,13 @@ export class Form extends Component {
       this.props.saveToStorage(this.props.params);
       this.saveToLocalStorage(this.props.params);
       this.setState(initialState);
+      this.props.clearStore();
     }
+    
   };
   render() {
     return (
-      <form className="" onSubmit={this.handleSubmit}>
+      <form className="" onSubmit={this.handleSubmit} ref={(el) => this.myFormRef = el}>
         <div class="form-group">
           <label for="exampleInputEmail1">First Name</label>
           <input
@@ -101,7 +103,7 @@ export class Form extends Component {
             value={this.props.params.firstName}
             onChange={this.onFieldChange}
             className={`form-control ${
-              this.state.nameError ? "is-invalid" : null
+              this.state.nameError ? "is-invalid animated shake" : null
             }`}
             placeholder="Enter first name"
           />
@@ -120,7 +122,7 @@ export class Form extends Component {
             value={this.props.params.lastName}
             onChange={this.onFieldChange}
             className={`form-control ${
-              this.state.lastNameError ? "is-invalid" : null
+              this.state.lastNameError ? "is-invalid animated shake" : null
             }`}
             id="exampleInputEmail1"
             placeholder="Enter last name"
@@ -147,7 +149,7 @@ export class Form extends Component {
           /> */}
           <MaskedInput
             className={`form-control ${
-              this.state.phoneError ? "is-invalid" : null
+              this.state.phoneError ? "is-invalid animated shake" : null
             }`}
             name="phone"
             value={this.props.params.phone}
@@ -164,7 +166,7 @@ export class Form extends Component {
           <label>Gender</label>
           <select
             className={`form-control form-control md ${
-              this.state.genderError ? "is-invalid" : null
+              this.state.genderError ? "is-invalid animated shake" : null
             }`}
             name="gender"
             value={this.props.params.gender}
@@ -189,7 +191,7 @@ export class Form extends Component {
             value={this.props.params.age}
             onChange={this.onFieldChange}
             className={`form-control ${
-              this.state.ageError ? "is-invalid" : null
+              this.state.ageError ? "is-invalid animated shake" : null
             }`}
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
