@@ -204,7 +204,7 @@ export class Form extends Component {
           ) : null}
         </div>
 
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn w-100 btn-primary">
           Submit
         </button>
       </form>

@@ -1,24 +1,52 @@
-.data-col{
-    position: relative;
-    min-height:555px;
-    & .pagination{
-        cursor: pointer;
-        position: absolute;
-        bottom: -60px;
-        text-align: center;
-    }
+body {
+  background: url("../img/mont-2.jpg") no-repeat;
+  background-size: cover;
 }
-.col{
-    background: rgba(235, 234, 234, 0.726);
-    border-radius: 5px;
-    padding: 15px 10px 0px 10px;
-    
+.data-col {
+  position: relative;
+  min-height: 560px;
+  & .pagination {
+    cursor: pointer;
+    position: absolute;
+    bottom: -60px;
+    text-align: center;
+    opacity: 0.8;
+  }
+}
+.col {
+  border-radius: 5px;
+  padding: 15px 10px 0px 10px;
+
+  &:nth-child(1) {
+    & form {
+      background: rgba(235, 234, 234, 0.616);
+      padding: 20px;
+      border-radius: 5px;
+    }
+  }
+  &:nth-child(2) {
+    background: rgba(235, 234, 234, 0.616);
+    position: relative;
+    min-height: 560px;
+    & .pagination {
+      cursor: pointer;
+      position: absolute;
+      bottom: -60px;
+      text-align: center;
+      opacity: 0.8;
+    }
+  }
 }
 th {
-    cursor: pointer;
-    transition: all .2s ease;
-    &:hover{
-        background:#0069d9;
-        color: #fff;
-    }
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #0069d9;
+    color: #fff;
+    border-radius: 7px;
+  }
+}
+.alert{
+    background: rgba(235, 234, 234, 0.616);
 }
