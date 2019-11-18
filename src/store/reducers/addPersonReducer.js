@@ -1,5 +1,4 @@
-import { SET_PERSON_PARAMETER } from "../action/actions";
-import { SAVE_TO_STORAGE } from "../action/saveToStorage";
+import { SET_PERSON_PARAMETER } from "../action/setPersonParameter";
 import {CLEAR_STORE} from '../action/clearStore'
 
 const defaultState = {

@@ -1,6 +1,13 @@
+
+$mainBlue:#0069d996;
+$darkWhite:rgba(235, 234, 234, 0.616);
+
 body {
   background: url("../img/mont-2.jpg") no-repeat;
   background-size: cover;
+}
+.container{
+  min-height:100vh;
 }
 
 .col {
@@ -9,17 +16,17 @@ body {
 
   &:nth-child(1) {
     & form {
-      background: rgba(235, 234, 234, 0.616);
+      background: $darkWhite;
       padding: 20px;
+      margin-top:58px;
       border-radius: 5px;
     }
   }
   &:nth-child(2) {
-    position: relative;
 
     & .table-wrap {
       overflow: auto;
-      background: rgba(235, 234, 234, 0.616);
+      background: $darkWhite;
       padding: 10px;
       border-radius: 5px;
       min-height: 560px;
@@ -34,31 +41,32 @@ body {
     }
   }
 }
-th {
-  cursor: pointer;
-  transition: all 0.2s ease;
 
-  &:hover {
-    background: #0069d9;
-    color: #fff;
-    border-radius: 7px;
-  }
-}
 thead {
   & tr:hover {
     background: none;
     color: black;
   }
+  & th {
+    cursor: pointer;
+    transition: all 0.2s ease;
+  
+    &:hover {
+      background: $mainBlue;
+      color: white;
+      border-radius: 7px;
+    }
+  }
 }
 tr {
   &:hover{
-    background: #0069d996;
-    color: #fff;
+    background: $mainBlue;
+    color: white;
     cursor: pointer;
   }
 }
 
 .active{
     background: #0069d996!important;
-    color: #fff;
+    color: white;
 }

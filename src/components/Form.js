@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { runInThisContext } from "vm";
 import MaskedInput from "react-text-mask";
 
 const initialState = {
@@ -32,12 +31,13 @@ export class Form extends Component {
       phoneError = "",
       genderError = "",
       ageError = "";
-      //Phone only check as, I suppose, there can exist two individuals with equal firstname,lastname,gender & age
-      let copy = this.props.data.find(item =>item.phone===this.props.params.phone );
-      if(copy){
-        alert("Such person already exists");
-        return false;
-      }
+    let copy = this.props.data.find(
+      item => item.phone === this.props.params.phone
+    );
+    if (copy) {
+      alert("Such person already exists");
+      return false;
+    }
     if (!this.props.params.firstName) {
       nameError = "First name is required";
       this.setState({ nameError });
@@ -56,7 +56,7 @@ export class Form extends Component {
       phoneError = "Input correct phone number";
       this.setState({ phoneError });
       return false;
-    } 
+    }
     if (!this.props.params.phone) {
       phoneError = "Phone number is required";
       this.setState({ phoneError });
@@ -90,25 +90,27 @@ export class Form extends Component {
     event.preventDefault();
 
     if (this.validateFields()) {
-      let id =`f${(+new Date).toString(16)}`;
-      let params ={...this.props.params,id};
-      console.log(params);
+      let id = `f${(+new Date()).toString(16)}`;
+      let params = { ...this.props.params, id };
       this.props.saveToStorage(params);
       this.saveToLocalStorage(params);
       this.setState(initialState);
       this.props.clearStore();
     }
-    
   };
   render() {
     return (
-      <form className="" onSubmit={this.handleSubmit} ref={(el) => this.myFormRef = el}>
-        <div class="form-group">
-          <label for="exampleInputEmail1">First Name</label>
+      <form
+        className=""
+        onSubmit={this.handleSubmit}
+        ref={el => (this.myFormRef = el)}
+      >
+        <div className="form-group">
+          <label>First Name</label>
           <input
             type="text"
             name="firstName"
-            maxlength="15"
+            maxLength="15"
             value={this.props.params.firstName}
             onChange={this.onFieldChange}
             className={`form-control ${
@@ -122,18 +124,17 @@ export class Form extends Component {
             </div>
           ) : null}
         </div>
-        <div class="form-group">
-          <label for="exampleInputEmail1">Last Name</label>
+        <div className="form-group">
+          <label>Last Name</label>
           <input
             type="text"
             name="lastName"
-            maxlength="15"
+            maxLength="15"
             value={this.props.params.lastName}
             onChange={this.onFieldChange}
             className={`form-control ${
               this.state.lastNameError ? "is-invalid animated shake" : null
             }`}
-            id="exampleInputEmail1"
             placeholder="Enter last name"
           />
           {this.state.lastNameError ? (
@@ -142,28 +143,33 @@ export class Form extends Component {
             </div>
           ) : null}
         </div>
-        <div class="form-group">
-          <label for="exampleInputEmail1">Phone</label>
-          {/* <input
-            type="text"
-            name="phone"
-            maxlength="15"
-            value={this.props.params.phone}
-            onChange={this.onFieldChange}
-            className={`form-control ${
-              this.state.phoneError ? "is-invalid" : null
-            }`}
-            id="exampleInputEmail1"
-            placeholder="Enter phone"
-          /> */}
+        <div className="form-group">
+          <label>Phone</label>
+
           <MaskedInput
             className={`form-control ${
               this.state.phoneError ? "is-invalid animated shake" : null
             }`}
             name="phone"
             value={this.props.params.phone}
-            onChange={(event)=>this.onFieldChange(event)}
-            mask={['(', /[0-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]} placeholder="(050) 000-0000"
+            onChange={event => this.onFieldChange(event)}
+            mask={[
+              "(",
+              /[0-9]/,
+              /\d/,
+              /\d/,
+              ")",
+              " ",
+              /\d/,
+              /\d/,
+              /\d/,
+              "-",
+              /\d/,
+              /\d/,
+              /\d/,
+              /\d/
+            ]}
+            placeholder="(050) 000-0000"
           />
           {this.state.phoneError ? (
             <div style={{ fontSize: 12, color: "red", textAlign: "center" }}>
@@ -171,7 +177,7 @@ export class Form extends Component {
             </div>
           ) : null}
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <label>Gender</label>
           <select
             className={`form-control form-control md ${
@@ -191,19 +197,18 @@ export class Form extends Component {
             </div>
           ) : null}
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <label>Age</label>
           <input
             type="text"
             name="age"
-            maxlength="3"
+            maxLength="3"
             value={this.props.params.age}
             onChange={this.onFieldChange}
             className={`form-control ${
               this.state.ageError ? "is-invalid animated shake" : null
             }`}
             id="exampleInputEmail1"
-            aria-describedby="emailHelp"
             placeholder="Enter your age"
           />
           {this.state.ageError ? (
@@ -213,7 +218,7 @@ export class Form extends Component {
           ) : null}
         </div>
 
-        <button type="submit" class="btn w-100 btn-primary">
+        <button type="submit" className="btn w-100 btn-primary">
           Submit
         </button>
       </form>

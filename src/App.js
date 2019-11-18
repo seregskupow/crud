@@ -3,7 +3,7 @@ import ReactPaginate from "react-paginate";
 import Form from "./components/Form";
 import Table from "./components/Table";
 import { connect } from "react-redux";
-import { setPersonParameter } from "./store/action/actions";
+import { setPersonParameter } from "./store/action/setPersonParameter";
 import { saveToStorage } from "./store/action/saveToStorage";
 import { getFromLS } from "./store/action/getFromLS";
 import { sortData } from "./store/action/sortData";
@@ -67,6 +67,9 @@ class App extends Component {
       shouldDelete = data.find(item => item.id === id),
       i = data.indexOf(shouldDelete);
     data.splice(i, 1);
+    if(data.length <=10){
+      this.setState({currentPage:0})
+    }
     if (window.confirm("Are you sure to delete row?")) {
       localStorage.setItem("data", JSON.stringify(data));
       this.props.getFromLS(JSON.parse(localStorage.getItem("data")));
@@ -83,11 +86,10 @@ class App extends Component {
   }
   dataFilter(data) {
     let filterParam = this.state.filterParam;
-    console.log(filterParam);
     if (!this.state.filterParam) {
       return data;
     }
-    return data.filter(item => {
+    let filteredData = data.filter(item => {
       let tempSearch = filterParam.toLowerCase();
       if (
         item.firstName.toLowerCase().includes(tempSearch) ||
@@ -99,19 +101,24 @@ class App extends Component {
         return item;
       }
     });
+    if (filteredData.length === 0) {
+      alert("No match");
+      return data;
+    } else {
+      return filteredData;
+    }
   }
   render() {
     const pageSize = 10;
-    
+
     let filteredData = this.dataFilter(this.props.data);
     let pageCount = Math.ceil(filteredData.length / pageSize);
     let displayData = _.chunk(filteredData, pageSize)[this.state.currentPage];
 
     return (
-      <div className="container mt-5 p-5">
-        <TableSearch onSearch={this.onSearch} />
-        <div className="row justify-content-between">
-          <div className="col col-12 col-lg-3 col-md-3 col-sm-12 mb-3">
+      <div className="container d-flex align-items-center justify-content-center mb-5">
+        <div className="row justify-content-center w-100">
+          <div className="col col-12 col-lg-3 col-md-12 col-sm-12 mb-3">
             <Form
               params={this.props.params}
               setPersonParameter={this.props.setPersonParameter}
@@ -122,7 +129,8 @@ class App extends Component {
             />
           </div>
 
-          <div className="col col-12 col-lg-8 col-md-8 col-sm-12 data-col">
+          <div className="col col-12 col-lg-8 col-md-12 col-sm-12 data-col">
+            <TableSearch onSearch={this.onSearch} />
             <div className="table-wrap">
               <table className="table">
                 <thead>
@@ -165,7 +173,6 @@ class App extends Component {
                     onSort={this.onSort}
                     rowHandleClick={this.rowHandleClick}
                     active={this.state.active}
-                    isActive={this.state.isActive}
                   />
                 ) : null}
               </table>
@@ -217,7 +224,6 @@ class App extends Component {
   }
 }
 const mapStateToProps = state => {
-  console.log(state.storage.data);
   return {
     params: state.person.params,
     data: state.storage.data
