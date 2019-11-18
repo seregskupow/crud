@@ -8,7 +8,7 @@ import { saveToStorage } from "./store/action/saveToStorage";
 import { getFromLS } from "./store/action/getFromLS";
 import { sortData } from "./store/action/sortData";
 import { clearStore } from "./store/action/clearStore";
-import TableSearch from './components/tableSearch'
+import TableSearch from "./components/tableSearch";
 import _ from "lodash";
 
 class App extends Component {
@@ -18,7 +18,8 @@ class App extends Component {
     this.handlePageClick = this.handlePageClick.bind(this);
     this.rowHandleClick = this.rowHandleClick.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
-    this.deleteAll=this.deleteAll.bind(this);
+    this.deleteAll = this.deleteAll.bind(this);
+    this.onSearch = this.onSearch.bind(this);
     this.state = {
       sort: "asc",
       currentPage: 0,
@@ -26,7 +27,8 @@ class App extends Component {
       sortField: "",
       displayData: [],
       deleteId: "",
-      active:""
+      active: "",
+      filterParam: ""
     };
   }
   handlePageClick({ selected }) {
@@ -46,9 +48,9 @@ class App extends Component {
     this.props.sortData(orderedData);
     this.setState({ sort: sortType, sortField });
   };
-  rowHandleClick(event,i) {
+  rowHandleClick(event, i) {
     let row = event.target.parentNode;
-    this.setState({ deleteId: row.getAttribute("data-id")});
+    this.setState({ deleteId: row.getAttribute("data-id") });
     if (i === this.state.active) {
       this.setState({
         active: null
@@ -58,7 +60,6 @@ class App extends Component {
         active: i
       });
     }
-    
   }
   handleDelete() {
     let id = this.state.deleteId,
@@ -71,24 +72,46 @@ class App extends Component {
       this.props.getFromLS(JSON.parse(localStorage.getItem("data")));
     }
   }
-  deleteAll(){
-    localStorage.clear();
-    this.props.getFromLS([]);
+  deleteAll() {
+    if (window.confirm("Are you sure you want to delete all rows?")) {
+      localStorage.clear();
+      this.props.getFromLS([]);
+    }
+  }
+  onSearch(search) {
+    this.setState({ filterParam: search, currentPage: 0 });
+  }
+  dataFilter(data) {
+    let filterParam = this.state.filterParam;
+    console.log(filterParam);
+    if (!this.state.filterParam) {
+      return data;
+    }
+    return data.filter(item => {
+      let tempSearch = filterParam.toLowerCase();
+      if (
+        item.firstName.toLowerCase().includes(tempSearch) ||
+        item.lastName.toLowerCase().includes(tempSearch) ||
+        item.phone.toLowerCase().includes(tempSearch) ||
+        item.gender.toLowerCase().includes(tempSearch) ||
+        item.age.toLowerCase().includes(tempSearch)
+      ) {
+        return item;
+      }
+    });
   }
   render() {
     const pageSize = 10;
-    let pageCount = Math.ceil(this.props.data.length / pageSize);
-    let displayData = _.chunk(this.props.data, pageSize)[
-      this.state.currentPage
-    ];
+    
+    let filteredData = this.dataFilter(this.props.data);
+    let pageCount = Math.ceil(filteredData.length / pageSize);
+    let displayData = _.chunk(filteredData, pageSize)[this.state.currentPage];
 
     return (
       <div className="container mt-5 p-5">
-         <TableSearch />
+        <TableSearch onSearch={this.onSearch} />
         <div className="row justify-content-between">
-          
           <div className="col col-12 col-lg-3 col-md-3 col-sm-12 mb-3">
-            
             <Form
               params={this.props.params}
               setPersonParameter={this.props.setPersonParameter}
@@ -100,7 +123,6 @@ class App extends Component {
           </div>
 
           <div className="col col-12 col-lg-8 col-md-8 col-sm-12 data-col">
-         
             <div className="table-wrap">
               <table className="table">
                 <thead>
@@ -144,7 +166,6 @@ class App extends Component {
                     rowHandleClick={this.rowHandleClick}
                     active={this.state.active}
                     isActive={this.state.isActive}
-                    
                   />
                 ) : null}
               </table>
@@ -181,7 +202,7 @@ class App extends Component {
                 </button>
               </div>
               <div className="delete-all">
-              <button
+                <button
                   className="btn btn-danger"
                   onClick={() => this.deleteAll()}
                 >
