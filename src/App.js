@@ -8,6 +8,7 @@ import { saveToStorage } from "./store/action/saveToStorage";
 import { getFromLS } from "./store/action/getFromLS";
 import { sortData } from "./store/action/sortData";
 import { clearStore } from "./store/action/clearStore";
+import TableSearch from './components/tableSearch'
 import _ from "lodash";
 
 class App extends Component {
@@ -83,8 +84,11 @@ class App extends Component {
 
     return (
       <div className="container mt-5 p-5">
+         <TableSearch />
         <div className="row justify-content-between">
+          
           <div className="col col-12 col-lg-3 col-md-3 col-sm-12 mb-3">
+            
             <Form
               params={this.props.params}
               setPersonParameter={this.props.setPersonParameter}
@@ -96,6 +100,7 @@ class App extends Component {
           </div>
 
           <div className="col col-12 col-lg-8 col-md-8 col-sm-12 data-col">
+         
             <div className="table-wrap">
               <table className="table">
                 <thead>
