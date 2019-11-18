@@ -24,8 +24,8 @@ class App extends Component {
       pageSize: 10,
       sortField: "",
       displayData: [],
-      id: "",
-      ative:false
+      deleteId: "",
+      active:""
     };
   }
   handlePageClick({ selected }) {
@@ -45,19 +45,29 @@ class App extends Component {
     this.props.sortData(orderedData);
     this.setState({ sort: sortType, sortField });
   };
-  rowHandleClick(event) {
+  rowHandleClick(event,i) {
     let row = event.target.parentNode;
-    this.setState({ deleteId: row.getAttribute("data-id"),active:!this.state.active });
+    this.setState({ deleteId: row.getAttribute("data-id")});
+    if (i === this.state.active) {
+      this.setState({
+        active: null
+      });
+    } else {
+      this.setState({
+        active: i
+      });
+    }
+    
   }
   handleDelete() {
-    let id = this.state.id,
+    let id = this.state.deleteId,
       data = this.props.data,
       shouldDelete = data.find(item => item.id === id),
       i = data.indexOf(shouldDelete);
     data.splice(i, 1);
     if (window.confirm("Are you sure to delete row?")) {
       localStorage.setItem("data", JSON.stringify(data));
-      this.props.getFromLS([JSON.parse(localStorage.getItem("data"))]);
+      this.props.getFromLS(JSON.parse(localStorage.getItem("data")));
     }
   }
   deleteAll(){
@@ -127,7 +137,8 @@ class App extends Component {
                     data={displayData}
                     onSort={this.onSort}
                     rowHandleClick={this.rowHandleClick}
-                    
+                    active={this.state.active}
+                    isActive={this.state.isActive}
                     
                   />
                 ) : null}

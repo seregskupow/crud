@@ -1,16 +1,26 @@
-import React from "react";
+import React,{useState} from "react";
 import _ from "lodash";
 
-export default function Table(props) {
-  const { data, rowHandleClick } = props;
 
+
+export default function Table(props) {
+  const { data, rowHandleClick,active,isActive } = props;
+  const [value, setValue] = useState(false);
+const changeVal=()=>{
+ 
+}
   return (
     <tbody>
       {data.map(item => (
         <tr
-          key={Math.random() * 1000 + 1}
+          key={item.id}
           data-id={item.id}
-          onClick={event => rowHandleClick(event)}
+          onClick={event => {rowHandleClick(event,item.id)}}
+          className={
+           active === item.id
+              ? "active"
+              : "none"
+          }
         >
           <td>{item.firstName}</td>
           <td>{item.lastName}</td>
