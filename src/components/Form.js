@@ -32,6 +32,12 @@ export class Form extends Component {
       phoneError = "",
       genderError = "",
       ageError = "";
+      //Phone only check as, I suppose, there can exist two individuals with equal firstname,lastname,gender & age
+      let copy = this.props.data.find(item =>item.phone===this.props.params.phone );
+      if(copy){
+        alert("Such person already exists");
+        return false;
+      }
     if (!this.props.params.firstName) {
       nameError = "First name is required";
       this.setState({ nameError });
@@ -84,8 +90,11 @@ export class Form extends Component {
     event.preventDefault();
 
     if (this.validateFields()) {
-      this.props.saveToStorage(this.props.params);
-      this.saveToLocalStorage(this.props.params);
+      let id =`f${(+new Date).toString(16)}`;
+      let params ={...this.props.params,id};
+      console.log(params);
+      this.props.saveToStorage(params);
+      this.saveToLocalStorage(params);
       this.setState(initialState);
       this.props.clearStore();
     }
